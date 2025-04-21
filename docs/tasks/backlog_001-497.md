@@ -52,3 +52,53 @@
 | 048  | E-01  | Add endpoint to archive a session                       | (TBD)   | P2       | BACKLOG  |                      |
 | 049  | E-01  | Add endpoint to restore an archived session             | (TBD)   | P2       | BACKLOG  |                      |
 | 050  | E-01  | Add endpoint to export session data as JSON             | (TBD)   | P2       | BACKLOG  |                      |
+| 051  | E-02  | Scaffold CI pipeline with GitHub Actions (.yml)         | (TBD)   | P0       | BACKLOG  | DOC                  |
+| 052  | E-02  | Add linting step to CI pipeline                        | (TBD)   | P0       | BACKLOG  |                      |
+| 053  | E-02  | Add type-checking step to CI pipeline                  | (TBD)   | P0       | BACKLOG  |                      |
+| 054  | E-02  | Add unit test step to CI pipeline                      | (TBD)   | P0       | BACKLOG  | TEST                 |
+| 055  | E-02  | Add code coverage reporting to CI                      | (TBD)   | P0       | BACKLOG  |                      |
+| 056  | E-02  | Add schema validation (SCHEMA-GATE) to CI              | (TBD)   | P0       | BACKLOG  | SEC                  |
+| 057  | E-02  | Add PR title/description check to CI                   | (TBD)   | P1       | BACKLOG  |                      |
+| 058  | E-02  | Add branch naming convention check to CI               | (TBD)   | P1       | BACKLOG  |                      |
+| 059  | E-02  | Add auto-labeling for PRs in CI                        | (TBD)   | P1       | BACKLOG  |                      |
+| 060  | E-02  | Add Guardian bot for enforcing open PR/task linkage    | (TBD)   | P0       | BACKLOG  | SEC                  |
+| 061  | E-02  | Add Guardian bot for schema diff enforcement           | (TBD)   | P0       | BACKLOG  | SEC                  |
+| 062  | E-02  | Add Guardian bot for code coverage enforcement         | (TBD)   | P1       | BACKLOG  |                      |
+| 063  | E-02  | Add Guardian bot for CI status checks                  | (TBD)   | P1       | BACKLOG  |                      |
+| 064  | E-02  | Add Guardian bot for merge freeze on failed checks     | (TBD)   | P1       | BACKLOG  | SEC                  |
+| 065  | E-02  | Document CI/CD pipeline in /docs/ci_cd.md              | (TBD)   | P0       | BACKLOG  | DOC                  |
+| 066  | E-02  | Add notification step for failed CI runs               | (TBD)   | P2       | BACKLOG  |                      |
+| 067  | E-02  | Add notification step for successful CI runs           | (TBD)   | P2       | BACKLOG  |                      |
+| 068  | E-02  | Add Slack/webhook integration for CI notifications     | (TBD)   | P2       | BACKLOG  |                      |
+| 069  | E-02  | Add scheduled CI runs (nightly/weekly)                 | (TBD)   | P2       | BACKLOG  |                      |
+| 070  | E-02  | Add CI badge to README.md                              | (TBD)   | P2       | BACKLOG  | DOC                  |
+| 071  | E-03  | Scaffold UI dashboard project structure                 | (TBD)   | P0       | BACKLOG  |                      |
+| 072  | E-03  | Implement dashboard system status widget                | (TBD)   | P0       | BACKLOG  |                      |
+| 073  | E-03  | Implement dashboard recent activity log                 | (TBD)   | P0       | BACKLOG  |                      |
+| 074  | E-03  | Implement dashboard conversation explorer               | (TBD)   | P0       | BACKLOG  |                      |
+| 075  | E-03  | Implement dashboard document preview                    | (TBD)   | P1       | BACKLOG  |                      |
+| 076  | E-03  | Implement dashboard agent status indicators             | (TBD)   | P1       | BACKLOG  |                      |
+| 077  | E-03  | Implement dashboard manual intervention controls        | (TBD)   | P1       | BACKLOG  |                      |
+| 078  | E-03  | Add dashboard authentication (login)                    | (TBD)   | P1       | BACKLOG  | SEC                  |
+| 079  | E-03  | Add dashboard user roles/permissions                    | (TBD)   | P1       | BACKLOG  | SEC                  |
+| 080  | E-03  | Add dashboard settings/config panel                     | (TBD)   | P2       | BACKLOG  |                      |
+| 081  | E-03  | Add dashboard dark mode toggle                          | (TBD)   | P2       | BACKLOG  |                      |
+| 082  | E-03  | Add dashboard notification center                       | (TBD)   | P2       | BACKLOG  |                      |
+| 083  | E-03  | Add dashboard search/filter for conversations           | (TBD)   | P2       | BACKLOG  |                      |
+| 084  | E-03  | Add dashboard export/download conversation feature      | (TBD)   | P2       | BACKLOG  |                      |
+| 085  | E-03  | Add dashboard analytics/metrics widget                  | (TBD)   | P2       | BACKLOG  |                      |
+| 086  | E-03  | Add dashboard error reporting widget                    | (TBD)   | P2       | BACKLOG  |                      |
+| 087  | E-03  | Add dashboard onboarding/help tour                      | (TBD)   | P2       | BACKLOG  | DOC                  |
+| 088  | E-03  | Document dashboard features in /docs/dashboard.md       | (TBD)   | P2       | BACKLOG  | DOC                  |
+| 089  | E-03  | Add dashboard accessibility improvements                | (TBD)   | P2       | BACKLOG  |                      |
+| 090  | E-03  | Add dashboard mobile responsiveness                     | (TBD)   | P2       | BACKLOG  |                      |
+| 091  | E-03  | Add dashboard localization/internationalization         | (TBD)   | P3       | BACKLOG  |                      |
+| 092  | E-03  | Add dashboard plugin/extension system                   | (TBD)   | P3       | BACKLOG  |                      |
+| 093  | E-03  | Add dashboard theme customization                      | (TBD)   | P3       | BACKLOG  |                      |
+| 094  | E-03  | Add dashboard user profile/settings                     | (TBD)   | P3       | BACKLOG  |                      |
+| 095  | E-03  | Add dashboard audit log viewer                          | (TBD)   | P3       | BACKLOG  |                      |
+| 096  | E-03  | Add dashboard session timeout/auto-logout               | (TBD)   | P3       | BACKLOG  | SEC                  |
+| 097  | E-03  | Add dashboard feedback/bug report form                  | (TBD)   | P3       | BACKLOG  |                      |
+| 098  | E-03  | Add dashboard integration with external tools           | (TBD)   | P3       | BACKLOG  |                      |
+| 099  | E-03  | Add dashboard real-time event stream (SSE/WebSocket)    | (TBD)   | P3       | BACKLOG  |                      |
+| 100  | E-03  | Add dashboard test coverage and e2e tests               | (TBD)   | P3       | BACKLOG  | TEST                 |
