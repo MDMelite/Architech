@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: Architectum GitHub Agent API
+  version: "0.1.0"
+  description: >
+    The GitHub Agent is a document‑driven service that enables AI agents
+    to create, modify, and merge code via GitHub using a file‑based
+    conversation workflow.
+servers:
+  - url: http://localhost:8080
+    description: Local Firebase emulator
+  - url: https://<region>-<project>.cloudfunctions.net/githubAgent
+    description: Deployed Cloud Function
+tags:
+  - name: health
+  - name: files
+  - name: workflow
+  - name: orchestration
+paths:
+  /status:
+    get:
+      tags: [health]
+      summary: Health check
+      responses:
+        "200": { description: OK }
+  /whoami:
+    get:
+      tags: [health]
+      summary: Environment info
+      responses:
+        "200": { description: OK }
+  /log:
+    post:
+      tags: [workflow]
+      summary: Append to log
+      requestBody: { required: true }
+      responses:
+        "200": { description: Logged }
+  /write-file:
+    post:
+      tags: [files]
+      summary: Write or update file
+      requestBody: { required: true }
+      responses:
+        "200": { description: Written }
+  /plan:
+    post:
+      tags: [workflow]
+      summary: Save plan document
+      requestBody: { required: true }
+      responses:
+        "200": { description: Saved }
+  /create-pr:
+    post:
+      tags: [workflow]
+      summary: Create PR
+      requestBody: { required: true }
+      responses:
+        "200": { description: PR URL }
+  /files:
+    get:
+      tags: [files]
+      summary: List or read files
+      parameters:
+        - name: path
+          in: query
+          schema: { type: string }
+      responses:
+        "200": { description: File list or content }
+  /command:
+    post:
+      tags: [orchestration]
+      summary: Command router
+      requestBody: { required: true }
+      responses:
+        "200": { description: Result }

@@ -1,0 +1,27 @@
+{
+  "write_file": {
+    "args": { "path": "string", "content": "string" },
+    "description": "Create or overwrite a repo file"
+  },
+  "append_log": {
+    "args": { "entry": "string" },
+    "description": "Append markdown entry to logs/orion.md"
+  },
+  "submit_plan": {
+    "args": { "name": "string", "content": "string" },
+    "description": "Save a plan to docs/"
+  },
+  "create_conversation": { "args": {}, "description": "Start a new conversation session" },
+  "add_prompt": {
+    "args": { "session_id": "string", "title": "string", "context": "string", "instruction": "string" },
+    "description": "Generate a prompt markdown file"
+  },
+  "get_response": {
+    "args": { "session_id": "string", "prompt_id": "string" },
+    "description": "Retrieve Copilot response markdown"
+  },
+  "create_pr": {
+    "args": { "branch": "string", "title": "string", "body": "string" },
+    "description": "Branch, commit, and open a PR"
+  }
+}
