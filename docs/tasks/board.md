@@ -2,9 +2,9 @@
 
 | ID   | Status     |
 |------|------------|
-| 001  | BACKLOG    |
+| 001  | IN-PROGRESS|
 | 002  | BACKLOG    |
-| 003  | BACKLOG    |
+| 003  | IN-PROGRESS|
 | 004  | BACKLOG    |
 | 005  | BACKLOG    |
 | 006  | BACKLOG    |
@@ -73,7 +73,7 @@
 | 069  | BACKLOG    |
 | 070  | BACKLOG    |
 | 071  | BACKLOG    |
-| 072  | BACKLOG    |
+| 072  | IN-PROGRESS|
 | 073  | BACKLOG    |
 | 074  | BACKLOG    |
 | 075  | BACKLOG    |
