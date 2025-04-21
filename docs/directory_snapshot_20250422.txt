@@ -1,0 +1,38 @@
+Need to install the following packages:
+tree-cli@0.6.7
+Ok to proceed? (y) 
+
+/workspaces/Architech
+├── .env
+├── .git
+├── .github
+├── .gitignore
+├── .idx
+├── .modified
+├── .vscode
+├── README.md
+├── api
+├── components.json
+├── directory_structure.txt
+├── docs
+├── functions
+├── lib
+├── next.config.ts
+├── node_modules
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── project_structure.txt
+├── src
+├── tailwind.config.ts
+├── team_agents
+├── temp.md
+├── test.txt
+├── tools.json
+└── tsconfig.json
+
+directory: 11 file: 16
+
+
+
+[2K[1G
