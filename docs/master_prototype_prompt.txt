@@ -1,0 +1,235 @@
+Copilot Integration Prototype
+Current System Overview
+The Architectum system is a multi-agent architecture designed for automated code generation, documentation, and repository management. It consists of two primary components:
+
+API Gateway (Port 9000)
+
+Acts as a public entry point for external AI systems (like GPT)
+Translates input schemas (converts "files" key to "changes" key)
+Forwards requests to the GitHub Agent
+GitHub Agent (Port 8001)
+
+Provides multiple endpoints for file operations, PR creation, and system status
+Interacts with GitHub API to create branches, commits, and PRs
+Has recently been enhanced with a document-based method for GitHub Copilot integration
+The system currently operates in a request-response model where commands flow through the Gateway to the GitHub Agent, which then performs operations against a GitHub repository.
+
+Current Endpoints in GitHub Agent
+/status - Simple health check
+/whoami - Returns environment information
+/log - Appends log entries to logs/orion.md
+/write-file - Creates/updates files at specified paths
+/plan - Creates markdown files in docs directory
+/create-pr - Creates pull requests on GitHub
+/files - Lists directories or reads file contents
+/command - Generic command router (new MCP-style endpoint)
+/ - Dashboard UI showing recent commands and events
+Proposed Integration with GitHub Copilot
+A document-based workflow has been implemented for GitHub Copilot integration:
+
+The GitHub Agent generates specially formatted Markdown files in a dedicated directory
+These files are opened in VS Code where GitHub Copilot can provide assistance
+The human operator interacts with Copilot and saves responses
+A workflow script monitors for responses and processes them
+Prototype Requirements
+1. Enhanced Document-Based Workflow
+Design a seamless document-based workflow between AI agents and GitHub Copilot with the following features:
+
+Automated Prompt Generation: Create a system where AI agents (e.g., GPT) can automatically generate prompts for GitHub Copilot through API calls
+Structured Document Format: Define a consistent format for prompt documents that includes:
+
+Context section with relevant project information
+Clear instruction section
+Code references or snippets where applicable
+Expected output format specification
+Evaluation criteria
+Response Processing: Create a mechanism to parse and process GitHub Copilot's responses, including:
+
+Code extraction
+Rationale extraction
+Automatic feedback loop
+2. Interactive Interface
+Design a web-based dashboard that provides:
+
+Real-time visibility into the workflow between agents
+Document preview and editing capabilities
+Message history and threading
+Status monitoring for all agents
+Manual intervention options
+3. Enhanced API Layer
+Extend the current API Gateway and GitHub Agent to support:
+
+Bidirectional Communication: Enable both push and pull models for communication
+Event-Based Architecture: Implement webhooks or server-sent events for real-time updates
+Session Management: Support for long-running conversations across multiple documents
+Authorization Framework: Role-based access for different agents and humans
+4. Agent Orchestration
+Design an orchestration layer that:
+
+Coordinates multiple AI agents (e.g., GPT, GitHub Copilot, specialized tools)
+Manages document flow between agents
+Handles retry logic and error scenarios
+Provides traceability of decision-making across the system
+Technical Implementation Details
+Document-Based Workflow Implementation
+The core of the system should revolve around a document store with the following characteristics:
+
+/workspaces/architectum-system/
+├── docs/             # High-level planning documents
+├── agents/           # Agent-specific configuration
+├── conversations/    # Conversation history and state
+│   ├── [session_id]/
+│   │   ├── context.json       # Session context and metadata
+│   │   ├── 001_prompt.md      # Initial prompt
+│   │   ├── 001_response.md    # Response to initial prompt
+│   │   ├── 002_prompt.md      # Follow-up prompt
+│   │   └── ...
+├── templates/        # Document templates
+└── api/              # API services
+    ├── gateway/      # Enhanced gateway service
+    └── github-agent/ # GitHub operations service
+Document Format Specification
+Each prompt document should follow this structure:
+
+# Prompt: [Brief Title]
+
+## Session Information
+- Session ID: [unique_identifier]
+- Timestamp: [ISO timestamp]
+- Origin: [agent_id or "human"]
+- Target: [agent_id, e.g., "github-copilot"]
+
+## Context
+[Relevant context from the system, previous conversation, or workspace]
+
+## Instruction
+[Clear, specific instructions for the target agent]
+
+## Expected Output
+[Format and requirements for the response]
+
+## References
+[Code snippets, documentation links, or other relevant material]
+Response documents should follow:
+
+# Response: [Brief Title]
+
+## Session Information
+- In Reply To: [prompt_id]
+- Timestamp: [ISO timestamp]
+- Agent: [agent_id, e.g., "github-copilot"]
+
+## Solution
+[The main content of the response]
+
+## Explanation
+[Reasoning behind the solution]
+
+## Next Steps
+[Suggested follow-up actions or questions]
+API Enhancements
+Extend the current /command endpoint with additional operations:
+
+@app.post("/command")
+def command_router(command: str, args: dict):
+    # Existing commands...
+    
+    if command == "create_conversation":
+        # Create a new conversation session
+        session_id = create_unique_id()
+        session_dir = CONVERSATIONS_DIR / session_id
+        os.makedirs(session_dir, exist_ok=True)
+        return {"session_id": session_id}
+        
+    elif command == "add_prompt":
+        # Add a prompt to an existing conversation
+        session_id = args["session_id"]
+        title = args["title"]
+        context = args["context"]
+        instruction = args["instruction"]
+        # Generate document from template
+        # ...
+        
+    elif command == "get_response":
+        # Check for and retrieve response to a prompt
+        session_id = args["session_id"]
+        prompt_id = args["prompt_id"]
+        # ...
+Event Notification System
+Implement an event system for real-time updates:
+
+@app.get("/events")
+async def event_stream(request: Request):
+    # Set up SSE headers
+    async def event_generator():
+        while True:
+            if len(event_queue) > 0:
+                event = event_queue.pop(0)
+                yield f"data: {json.dumps(event)}\n\n"
+            await asyncio.sleep(1)
+    
+    return StreamingResponse(event_generator(), media_type="text/event-stream")
+Interface Implementation
+The dashboard should provide:
+
+Conversation View:
+
+Thread-based view of prompts and responses
+Document preview with syntax highlighting
+Editing capabilities for human intervention
+System Status:
+
+Agent health indicators
+Recent activity log
+Resource utilization
+Control Panel:
+
+Ability to create new conversations
+Adjustable agent parameters
+Manual override options
+Integration Workflow
+Initialization Phase:
+
+External agent (e.g., GPT) calls Gateway to create a new conversation
+Gateway assigns a session ID and creates the conversation directory
+Prompt Generation Phase:
+
+External agent sends a command to create a prompt document
+GitHub Agent generates the document based on templates
+Document is stored in the conversation directory
+Copilot Interaction Phase:
+
+VS Code extension or scheduled task detects new prompt documents
+Documents are opened in VS Code for GitHub Copilot interaction
+Human operator or automated system interacts with Copilot
+Response is saved in the conversation directory
+Response Processing Phase:
+
+GitHub Agent detects new response documents
+Content is parsed and processed according to rules
+Results are made available through the API
+Events are generated to notify interested parties
+Feedback Loop:
+
+External agent retrieves the processed response
+Based on the response, it may generate follow-up prompts
+The cycle continues until the task is complete
+Advantages of This Approach
+Transparent Workflow: All interactions are documented and traceable
+Human-in-the-loop: Easy for humans to intervene at any point
+Platform Independence: Not tied to specific AI implementations
+Asynchronous Operation: Agents can work at their own pace
+Scalability: Can add more specialized agents over time
+Challenges and Considerations
+Document Versioning: Need to handle concurrent edits and versioning
+Timeout Handling: How to handle scenarios where responses are delayed
+Error Recovery: Graceful degradation when components fail
+Security: Careful consideration of permissions and access control
+Resource Management: Efficient storage and retrieval of documents
+Next Steps for Prototype Development
+Implement the enhanced document store structure
+Develop templates for prompt and response documents
+Extend the API Gateway with event notification capabilities
+Create a basic web dashboard for monitoring and interaction
+Implement the VS Code integration for GitHub Copilot interaction
+This prototype should demonstrate the viability of a document-based workflow for AI agent orchestration, with particular emphasis on seamless integration between external AI systems and GitHub Copilot.
