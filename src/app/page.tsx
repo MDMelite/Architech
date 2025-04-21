@@ -15,9 +15,21 @@ import {
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState} from 'react';
+import useSWR from 'swr';
+import { RecentActivity } from "../components/RecentActivity";
+import { StatusCard } from "../components/StatusCard";
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
+const logFetcher = async () => {
+  const res = await fetch("/api/recent-activity");
+  if (!res.ok) return [];
+  return await res.json();
+};
 
 export default function Home() {
   const [apiStatus, setApiStatus] = useState('Offline');
+  const { data, error } = useSWR("/api/status", fetcher, { refreshInterval: 5000 });
+  const { data: logLines } = useSWR("/api/recent-activity", logFetcher, { refreshInterval: 10000 });
 
   useEffect(() => {
     const checkApiStatus = async () => {
@@ -77,23 +89,14 @@ export default function Home() {
           </SidebarFooter>
         </Sidebar>
 
-        <main className="flex-1 p-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Welcome to Architectum IDE</CardTitle>
-              <CardDescription>
-                Multi-agent architecture for automated code generation, documentation, and
-                repository management.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>
-                This is a prototype demonstrating the viability of a document-based workflow for AI
-                agent orchestration, with particular emphasis on seamless integration between
-                external AI systems and GitHub Copilot.
-              </p>
-            </CardContent>
-          </Card>
+        <main className="flex flex-col items-center justify-center min-h-screen py-8 px-4 bg-white dark:bg-black">
+          <div className="w-full max-w-xl space-y-6">
+            {data && (
+              <StatusCard endpoint={data.endpoint} status={data.status} ts={data.ts} />
+            )}
+            <RecentActivity lines={logLines || []} />
+            {/* TODO: Conversation explorer widget */}
+          </div>
         </main>
       </div>
     </SidebarProvider>

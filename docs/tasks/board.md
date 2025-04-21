@@ -10,3 +10,4 @@
 | T-008 | Docs: Architecture diagram in docs/architecture_overview.png | Orion     | BACKLOG      | P3       | optional but nice                 |
 | T-009 | GitHub token secret setup in Firebase     | Commander | BACKLOG      | P0       | needed before create-pr flow      |
 | T-010 | Dgraph adapter PoC (future phase)         | Prime     | BACKLOG      | P4       | —                                  |
+| T-073 | Dashboard recent-activity widget          | Orion     | IN-PROGRESS  | P1       | —                                  |
