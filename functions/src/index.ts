@@ -1,11 +1,9 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { flow, flowHttp } from "@genkit-ai/flow";
+import { statusFlow } from "./flows/statusFlow.js";
+import { startFlowServer } from "@genkit-ai/ai/server";
 
 // ---- health flows --------------------------------------------------
-export const statusFlow = flow("statusFlow", async () => ({
-  endpoint: "/status",
-  status: "not-yet-implemented"
-}));
 export const whoamiFlow = flow("whoamiFlow", async () => ({
   endpoint: "/whoami",
   status: "not-yet-implemented"
@@ -49,3 +47,5 @@ export const command   = onRequest(flowHttp(commandFlow));
 
 // ---- Genkit Dev UI --------------------------------------------------
 import "@genkit-ai/flow/devui";
+
+startFlowServer({ flows: [statusFlow] });
